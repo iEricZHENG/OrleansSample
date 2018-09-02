@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceManifest Name="StatelessHostPkg"
+                 Version="1.0.0"
+                 xmlns="http://schemas.microsoft.com/2011/01/fabric"
+                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ServiceTypes>
+    <!-- 这是 ServiceType 的名称。
+         此名称必须与 Program.cs 中的 RegisterServiceAsync 调用中所用字符串相同。 -->
+    <StatelessServiceType ServiceTypeName="StatelessHostType" />
+  </ServiceTypes>
+
+  <!-- 代码包是指服务可执行文件。 -->
+  <CodePackage Name="Code" Version="1.0.0">
+    <EntryPoint>
+      <ExeHost>
+        <Program>StatelessHost.exe</Program>
+      </ExeHost>
+    </EntryPoint>
+  </CodePackage>
+
+  <!-- 配置包是 PackageRoot 下 Config 目录的内容，它包含服务的一组 
+       可独立更新且固定版本的自定义配置设置。-->
+  <ConfigPackage Name="Config" Version="1.0.0" />
+
+  <Resources>
+    <Endpoints>
+      <!-- This endpoint is used by the communication listener to obtain the port on which to 
+           listen. Please note that if your service is partitioned, this port is shared with 
+           replicas of different partitions that are placed in your code. -->
+      <Endpoint Name="ServiceEndpoint" />
+      <Endpoint Name="OrleansSiloEndpoint" Protocol="tcp"/>
+      <Endpoint Name="OrleansProxyEndpoint" Protocol="tcp"/>
+    </Endpoints>
+  </Resources>
+</ServiceManifest>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="AppCloudType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <Parameters>
+    <Parameter Name="StatelessHost_InstanceCount" DefaultValue="1" />
+  </Parameters>
+  <!-- 从 ServicePackage 导入 ServiceManifest。ServiceManifestName 和 ServiceManifestVersion
+       应与 ServiceManifest.xml 文件中定义的 ServiceManifest 元素的
+       名称属性和版本属性相匹配。 -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="StatelessHostPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+  </ServiceManifestImport>
+  <DefaultServices>
+    <!-- 在创建此应用程序类型时，以下部分
+         将创建服务类型的实例。你还可以使用 ServiceFabric PowerShell 模块创建
+          一个或多个服务类型实例。
+         
+         以下属性 ServiceTypeName 必须与导入的 ServiceManifest.xml 文件中所定义的名称相匹配。 -->
+    <Service Name="StatelessHost" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="StatelessHostType" InstanceCount="[StatelessHost_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+  </DefaultServices>
+</ApplicationManifest>
