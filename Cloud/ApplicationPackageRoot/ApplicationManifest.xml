@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ApplicationManifest ApplicationTypeName="CloudType"
+                     ApplicationTypeVersion="1.0.0"
+                     xmlns="http://schemas.microsoft.com/2011/01/fabric"
+                     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Parameters>
+    <Parameter Name="Console_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="Web_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="Host_InstanceCount" DefaultValue="-1" />
+  </Parameters>
+  <!-- 从 ServicePackage 导入 ServiceManifest。ServiceManifestName 和 ServiceManifestVersion
+       应与 ServiceManifest.xml 文件中定义的 ServiceManifest 元素的
+       名称属性和版本属性相匹配。 -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ConsolePkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="WebPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="HostPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+  </ServiceManifestImport>
+  <DefaultServices>
+    <!-- 在创建此应用程序类型时，以下部分
+         将创建服务类型的实例。你还可以使用 ServiceFabric PowerShell 模块创建
+          一个或多个服务类型实例。
+         
+         以下属性 ServiceTypeName 必须与导入的 ServiceManifest.xml 文件中所定义的名称相匹配。 -->
+    <Service Name="Console" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="ConsoleType" InstanceCount="[Console_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="Web" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="WebType" InstanceCount="[Web_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+    <Service Name="Host" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="HostType" InstanceCount="[Host_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
+  </DefaultServices>
+</ApplicationManifest>
