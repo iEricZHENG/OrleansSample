@@ -75,6 +75,15 @@ namespace StatelessHost
                         // Alternative: add all loadable assemblies in the current base path (see AppDomain.BaseDirectory).
                         parts.AddFromApplicationBaseDirectory();
                     });
+                    builder.UseDashboard(options =>
+                    {
+                        options.Username = "Kiwi";
+                        options.Password = "Kiwi";
+                        options.Host = "*";
+                        options.Port = 8080;
+                        options.HostSelf = true;
+                        options.CounterUpdateIntervalMs = 1000;
+                    });
                 });
 
             return new[] { listener };

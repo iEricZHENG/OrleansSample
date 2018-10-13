@@ -12,9 +12,10 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Orleans.Clustering.AdoNet" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Orleans.Hosting.ServiceFabric" Version="2.0.4" />
-    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="3.2.162" />
+    <PackageReference Include="Microsoft.Orleans.Clustering.AdoNet" Version="2.1.2" />
+    <PackageReference Include="Microsoft.Orleans.Hosting.ServiceFabric" Version="2.1.2" />
+    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="3.2.187" />
+    <PackageReference Include="OrleansDashboard" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
