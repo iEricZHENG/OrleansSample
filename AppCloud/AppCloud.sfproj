@@ -33,6 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StatelessHost\StatelessHost.csproj" />
+    <ProjectReference Include="..\StatelessWebGo\StatelessWebGo.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
   <PropertyGroup>

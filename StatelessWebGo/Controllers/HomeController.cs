@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Demo.IGrain;
 using Lib;
+using Microsoft.AspNetCore.Mvc;
 
-namespace StatelessWeb.Controllers
+namespace StatelessWebGo.Controllers
 {
     public class HomeController : Controller
     {
@@ -12,7 +16,7 @@ namespace StatelessWeb.Controllers
         {
             this.clientFactory = clientFactory;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Go()
         {
             var client = clientFactory.GetClient();
             var actor = client.GetGrain<IHello>(0);

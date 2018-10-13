@@ -58,14 +58,14 @@ namespace StatelessHost
 
                     // Service Fabric manages port allocations, so update the configuration using those ports.
                     // Gather configuration from Service Fabric.
-                    var activation = fabricServiceContext.CodePackageActivationContext;
-                    var endpoints = activation.GetEndpoints();
+                    //var activation = fabricServiceContext.CodePackageActivationContext;
+                    //var endpoints = activation.GetEndpoints();
 
-                    // These endpoint names correspond to TCP endpoints specified in ServiceManifest.xml
-                    var siloEndpoint = endpoints["OrleansSiloEndpoint"];
-                    var gatewayEndpoint = endpoints["OrleansProxyEndpoint"];
-                    var hostname = fabricServiceContext.NodeContext.IPAddressOrFQDN;
-                    builder.ConfigureEndpoints(hostname, siloEndpoint.Port, gatewayEndpoint.Port);
+                    //// These endpoint names correspond to TCP endpoints specified in ServiceManifest.xml
+                    //var siloEndpoint = endpoints["OrleansSiloEndpoint"];
+                    //var gatewayEndpoint = endpoints["OrleansProxyEndpoint"];
+                    //var hostname = fabricServiceContext.NodeContext.IPAddressOrFQDN;
+                    //builder.ConfigureEndpoints(hostname, siloEndpoint.Port, gatewayEndpoint.Port);
 
                     // Add your application assemblies.
                     builder.ConfigureApplicationParts(parts =>

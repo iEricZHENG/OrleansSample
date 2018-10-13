@@ -1,27 +1,27 @@
-﻿using System;
+﻿using Demo.IGrain;
+using Lib;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
+using Orleans;
+using Orleans.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Fabric;
 using System.IO;
 using System.Threading.Tasks;
-using Demo.IGrain;
-using Lib;
-using Microsoft.Extensions.Logging;
-using Orleans;
-using Orleans.Runtime;
 
-namespace StatelessWeb
+namespace StatelessWebGo
 {
     /// <summary>
     /// FabricRuntime 为每个服务类型实例创建此类的一个实例。 
     /// </summary>
-    internal sealed class StatelessWeb : StatelessService
+    internal sealed class StatelessWebGo : StatelessService
     {
-        public StatelessWeb(StatelessServiceContext context)
+        public StatelessWebGo(StatelessServiceContext context)
             : base(context)
         { }
 

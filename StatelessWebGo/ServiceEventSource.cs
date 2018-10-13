@@ -3,9 +3,9 @@ using System.Diagnostics.Tracing;
 using System.Fabric;
 using System.Threading.Tasks;
 
-namespace StatelessWeb
+namespace StatelessWebGo
 {
-    [EventSource(Name = "MyCompany-AppCloud-StatelessWeb")]
+    [EventSource(Name = "MyCompany-AppCloud-StatelessWebGo")]
     internal sealed class ServiceEventSource : EventSource
     {
         public static readonly ServiceEventSource Current = new ServiceEventSource();

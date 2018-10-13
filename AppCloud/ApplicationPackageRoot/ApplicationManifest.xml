@@ -1,11 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="AppCloudType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
+    <Parameter Name="StatelessWebGo_ASPNETCORE_ENVIRONMENT" DefaultValue="" />
+    <Parameter Name="StatelessWebGo_InstanceCount" DefaultValue="-1" />
     <Parameter Name="StatelessHost_InstanceCount" DefaultValue="1" />
   </Parameters>
   <!-- 从 ServicePackage 导入 ServiceManifest。ServiceManifestName 和 ServiceManifestVersion
        应与 ServiceManifest.xml 文件中定义的 ServiceManifest 元素的
        名称属性和版本属性相匹配。 -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="StatelessWebGoPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+    <EnvironmentOverrides CodePackageRef="code">
+      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[StatelessWebGo_ASPNETCORE_ENVIRONMENT]" />
+    </EnvironmentOverrides>
+  </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="StatelessHostPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides />
@@ -16,6 +25,11 @@
           一个或多个服务类型实例。
          
          以下属性 ServiceTypeName 必须与导入的 ServiceManifest.xml 文件中所定义的名称相匹配。 -->
+    <Service Name="StatelessWebGo" ServicePackageActivationMode="ExclusiveProcess">
+      <StatelessService ServiceTypeName="StatelessWebGoType" InstanceCount="[StatelessWebGo_InstanceCount]">
+        <SingletonPartition />
+      </StatelessService>
+    </Service>
     <Service Name="StatelessHost" ServicePackageActivationMode="ExclusiveProcess">
       <StatelessService ServiceTypeName="StatelessHostType" InstanceCount="[StatelessHost_InstanceCount]">
         <SingletonPartition />

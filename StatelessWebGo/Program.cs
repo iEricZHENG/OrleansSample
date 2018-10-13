@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 
-namespace StatelessWeb
+namespace StatelessWebGo
 {
     internal static class Program
     {
@@ -19,10 +19,10 @@ namespace StatelessWeb
                 // 在 Service Fabric 创建此服务类型的实例时，
                 // 会在此主机进程中创建类的实例。
 
-                ServiceRuntime.RegisterServiceAsync("StatelessWebType",
-                    context => new StatelessWeb(context)).GetAwaiter().GetResult();
+                ServiceRuntime.RegisterServiceAsync("StatelessWebGoType",
+                    context => new StatelessWebGo(context)).GetAwaiter().GetResult();
 
-                ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(StatelessWeb).Name);
+                ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(StatelessWebGo).Name);
 
                 // 防止此主机进程终止，以使服务保持运行。 
                 Thread.Sleep(Timeout.Infinite);
