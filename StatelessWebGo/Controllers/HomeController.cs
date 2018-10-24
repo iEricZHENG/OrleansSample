@@ -16,7 +16,7 @@ namespace StatelessWebGo.Controllers
         {
             this.clientFactory = clientFactory;
         }
-        public async Task<IActionResult> Go()
+        public async Task<IActionResult> Index()
         {
             var client = clientFactory.GetClient();
             var actor = client.GetGrain<IHello>(0);

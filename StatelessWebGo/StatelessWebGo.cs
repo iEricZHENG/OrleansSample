@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Fabric;
 using System.IO;
 using System.Threading.Tasks;
+using Orleans.Configuration;
+using Orleans.Hosting;
 
 namespace StatelessWebGo
 {
@@ -54,6 +56,9 @@ namespace StatelessWebGo
         }
         private static async Task<IClusterClient> StartClientWithRetries(int initializeAttemptsBeforeFailing = 5)
         {
+            var serviceName = new Uri("fabric:/AppCloud/StatelessHost");
+            const string invariant = "Npgsql";
+            const string connectionString = "Server=127.0.0.1;Port=5432;Database=Orleans;User Id=postgres;Password=123456;Pooling=false;";
             int attempt = 0;
             IClusterClient client;
             while (true)
@@ -63,7 +68,18 @@ namespace StatelessWebGo
                     client = await ClientFactory.Build(() =>
                     {
                         var builder = new ClientBuilder()
-                            .UseLocalhostClustering()
+                            //.UseLocalhostClustering()
+                            .Configure<ClusterOptions>(options =>
+                            {
+                                //options.ServiceId =serviceName.ToString();
+                                options.ServiceId = "CoinWeb";
+                                options.ClusterId = "CoinV2";
+                            })
+                            .UseAdoNetClustering(option =>
+                                {
+                                    option.ConnectionString = connectionString;
+                                    option.Invariant = invariant;
+                                })
                             .ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(IHello).Assembly).WithReferences())
                             .ConfigureLogging(logging => logging.AddConsole());
                         return builder;

@@ -29,6 +29,9 @@ namespace StatelessHost
         /// <returns>侦听器集合。</returns>
         protected override IEnumerable<ServiceInstanceListener> CreateServiceInstanceListeners()
         {
+            const string invariant = "Npgsql";
+            const string connectionString = "Server=127.0.0.1;Port=5432;Database=Orleans;User Id=postgres;Password=123456;Pooling=false;";
+
             // Listeners can be opened and closed multiple times over the lifetime of a service instance.
             // A new Orleans silo will be both created and initialized each time the listener is opened and will be shutdown 
             // when the listener is closed.
@@ -39,18 +42,23 @@ namespace StatelessHost
                     {
                         // The service id is unique for the entire service over its lifetime. This is used to identify persistent state
                         // such as reminders and grain state.
-                        options.ServiceId = fabricServiceContext.ServiceName.ToString();
+                        //options.ServiceId = fabricServiceContext.ServiceName.ToString();
+                        options.ServiceId = "CoinWeb";
 
                         // The cluster id identifies a deployed cluster. Since Service Fabric uses rolling upgrades, the cluster id
                         // can be kept constant. This is used to identify which silos belong to a particular cluster.
-                        options.ClusterId = "development";
+                        options.ClusterId = "CoinV2";
                     });
 
                     // Configure clustering. Other clustering providers are available, but for the purpose of this sample we
                     // will use Azure Storage.
                     // TODO: Pick a clustering provider and configure it here.
                     //builder.UseAzureStorageClustering(options => options.ConnectionString = "UseDevelopmentStorage=true");
-                    builder.UseLocalhostClustering();
+                    builder.UseAdoNetClustering(option =>
+                    {
+                        option.ConnectionString = connectionString;
+                        option.Invariant = invariant;
+                    });
                     // Optional: configure logging.
                     builder.ConfigureLogging(logging => logging.AddConsole());
 
@@ -58,14 +66,14 @@ namespace StatelessHost
 
                     // Service Fabric manages port allocations, so update the configuration using those ports.
                     // Gather configuration from Service Fabric.
-                    //var activation = fabricServiceContext.CodePackageActivationContext;
-                    //var endpoints = activation.GetEndpoints();
+                    var activation = fabricServiceContext.CodePackageActivationContext;
+                    var endpoints = activation.GetEndpoints();
 
                     //// These endpoint names correspond to TCP endpoints specified in ServiceManifest.xml
-                    //var siloEndpoint = endpoints["OrleansSiloEndpoint"];
-                    //var gatewayEndpoint = endpoints["OrleansProxyEndpoint"];
-                    //var hostname = fabricServiceContext.NodeContext.IPAddressOrFQDN;
-                    //builder.ConfigureEndpoints(hostname, siloEndpoint.Port, gatewayEndpoint.Port);
+                    var siloEndpoint = endpoints["OrleansSiloEndpoint"];
+                    var gatewayEndpoint = endpoints["OrleansProxyEndpoint"];
+                    var hostname = fabricServiceContext.NodeContext.IPAddressOrFQDN;
+                    builder.ConfigureEndpoints(hostname, siloEndpoint.Port, gatewayEndpoint.Port);
 
                     // Add your application assemblies.
                     builder.ConfigureApplicationParts(parts =>

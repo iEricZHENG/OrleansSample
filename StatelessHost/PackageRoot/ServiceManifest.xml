@@ -29,8 +29,8 @@
            listen. Please note that if your service is partitioned, this port is shared with 
            replicas of different partitions that are placed in your code. -->
       <Endpoint Name="ServiceEndpoint" />
-      <Endpoint Name="OrleansSiloEndpoint" Protocol="tcp"/>
-      <Endpoint Name="OrleansProxyEndpoint" Protocol="tcp"/>
+      <Endpoint Name="OrleansSiloEndpoint" Protocol="tcp" Port="30001"/>
+      <Endpoint Name="OrleansProxyEndpoint" Protocol="tcp" Port="30002"/>
     </Endpoints>
   </Resources>
 </ServiceManifest>
