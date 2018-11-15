@@ -61,7 +61,7 @@ namespace StatelessHost
                     });
                     // Optional: configure logging.
                     builder.ConfigureLogging(logging => logging.AddConsole());
-
+                    builder.AddStartupTask<StartupTask>();
                     //builder.AddStartupTask<StartupTask>();
 
                     // Service Fabric manages port allocations, so update the configuration using those ports.
