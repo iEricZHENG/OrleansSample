@@ -1,4 +1,7 @@
 ﻿using Demo.Grain;
+using Lib;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
@@ -9,6 +12,7 @@ using Orleans.Hosting.ServiceFabric;
 using System;
 using System.Collections.Generic;
 using System.Fabric;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,8 +33,11 @@ namespace StatelessHost
         /// <returns>侦听器集合。</returns>
         protected override IEnumerable<ServiceInstanceListener> CreateServiceInstanceListeners()
         {
-            const string invariant = "Npgsql";
-            const string connectionString = "Server=127.0.0.1;Port=5432;Database=Orleans;User Id=postgres;Password=123456;Pooling=false;";
+            var configBuilder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true);
+            var config = configBuilder.Build();
+            GlobalConfig.AddConfigurationObject(config, "all");
 
             // Listeners can be opened and closed multiple times over the lifetime of a service instance.
             // A new Orleans silo will be both created and initialized each time the listener is opened and will be shutdown 
@@ -43,11 +50,11 @@ namespace StatelessHost
                         // The service id is unique for the entire service over its lifetime. This is used to identify persistent state
                         // such as reminders and grain state.
                         //options.ServiceId = fabricServiceContext.ServiceName.ToString();
-                        options.ServiceId = "CoinWeb";
+                        options.ServiceId = config.GetSection("Orleans:ServiceId").Value;
 
                         // The cluster id identifies a deployed cluster. Since Service Fabric uses rolling upgrades, the cluster id
                         // can be kept constant. This is used to identify which silos belong to a particular cluster.
-                        options.ClusterId = "CoinV2";
+                        options.ClusterId = config.GetSection("Orleans:ClusterId").Value;
                     });
 
                     // Configure clustering. Other clustering providers are available, but for the purpose of this sample we
@@ -56,8 +63,8 @@ namespace StatelessHost
                     //builder.UseAzureStorageClustering(options => options.ConnectionString = "UseDevelopmentStorage=true");
                     builder.UseAdoNetClustering(option =>
                     {
-                        option.ConnectionString = connectionString;
-                        option.Invariant = invariant;
+                        option.ConnectionString = config.GetSection("Orleans:ConnectionString").Value;
+                        option.Invariant = config.GetSection("Orleans:Invariant").Value; ;
                     });
                     // Optional: configure logging.
                     builder.ConfigureLogging(logging => logging.AddConsole());

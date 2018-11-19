@@ -1,17 +1,16 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 
-namespace StatelessWebGo
+namespace Lib
 {
     /// <summary>
     ///  A static class that groups together instances of IConfiguration and allows them to be accessed anywhere in the application
     /// </summary>
     public class GlobalConfig : ConfigurationProvider
     {
-        public static Dictionary<string, IConfiguration> Sources { get; } = new Dictionary<string, IConfiguration>();
+        private static Dictionary<string, IConfiguration> Sources { get; } = new Dictionary<string, IConfiguration>();
         public static string ApplicationEnvironment { get; set; }
 
         /// <summary>

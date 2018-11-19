@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Demo.IGrain;
+﻿using Demo.IGrain;
 using Microsoft.Extensions.Logging;
 using Orleans;
 using Orleans.Runtime;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace StatelessHost
 {
@@ -15,7 +11,6 @@ namespace StatelessHost
     {
         private readonly IGrainFactory grainFactory;
         private readonly ILogger<StartupTask> logger;
-
         public StartupTask(IGrainFactory grainFactory, ILogger<StartupTask> logger)
         {
             this.grainFactory = grainFactory;
@@ -23,6 +18,7 @@ namespace StatelessHost
         }
         public Task Execute(CancellationToken cancellationToken)
         {
+            //var connectStr = GlobalConfig.Get("all", "Orleans:ConnectionString");//读取全局配置文件示例
             var actor = this.grainFactory.GetGrain<IHello>(0);
             Task.Factory.StartNew(
                 async () =>
