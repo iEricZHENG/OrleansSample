@@ -64,7 +64,7 @@ namespace StatelessHost
                     builder.UseAdoNetClustering(option =>
                     {
                         option.ConnectionString = config.GetSection("Orleans:ConnectionString").Value;
-                        option.Invariant = config.GetSection("Orleans:Invariant").Value; ;
+                        option.Invariant = config.GetSection("Orleans:Invariant").Value;
                     });
                     // Optional: configure logging.
                     builder.ConfigureLogging(logging => logging.AddConsole());

@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Demo.IGrain\Demo.IGrain.csproj" />
-    <ProjectReference Include="..\Lib\Lib.csproj" />
+    <ProjectReference Include="..\..\Demo.IGrain\Demo.IGrain.csproj" />
+    <ProjectReference Include="..\..\Lib\Lib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
